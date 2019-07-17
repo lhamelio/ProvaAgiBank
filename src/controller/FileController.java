@@ -22,23 +22,14 @@ public class FileController {
 			output.mkdirs();
 			System.out.println("\nPastas necessárias criadas.");
 			System.out.println("Para o correto funcionamento da aplicacao, coloque os arquivos com a extensao .dat na pasta 'in' em " + path.toString());
-			System.out.println("Apos isso, rodar de novo essa aplicacao.");
-			System.out.println("Encerrando...");
-			System.exit(0);
 		} else if (!input.exists()) {
 			new File(path + "/in").mkdir();
 			System.out.println("\nPastas necessárias criadas.");
 			System.out.println("Para o correto funcionamento da aplicacao, coloque os arquivos com a extensao .dat na pasta 'in' em " + path.toString());
-			System.out.println("Apos isso, rodar de novo essa aplicacao.");
-			System.out.println("Encerrando...");
-			System.exit(0);
 		} else if (!output.exists()) {
 			new File(path + "/out").mkdir();
 			System.out.println("\nPastas necessárias criadas.");
 			System.out.println("Para o correto funcionamento da aplicacao, coloque os arquivos com a extensao .dat na pasta 'in' em " + path.toString());
-			System.out.println("Apos isso, rodar de novo essa aplicacao.");
-			System.out.println("Encerrando...");
-			System.exit(0);
 		} else {
 			System.out.println("OK!");
 		}
@@ -58,22 +49,15 @@ public class FileController {
 			listOfFiles.add(aux[i]);
 		}
 		aux = null;
-		if (listOfFiles.isEmpty()) {
-			System.out.println("Pasta vazia.");
-			System.out.println("Para o correto funcionamento da aplicacao, coloque os arquivos com a extensao '.dat' em " + input.toString());
-			System.out.println("Encerrando...");
-			System.exit(1);
-		} else {
-			for (File f:listOfFiles) {
-				if (!f.getName().endsWith("dat")) {
-					listOfFiles.remove(f);
-				}
+		for (File f:listOfFiles) {
+			if (!f.getName().endsWith("dat")) {
+				listOfFiles.remove(f);
 			}
-			System.out.println("OK!");
 		}
+		System.out.println("OK!");
 		return listOfFiles;
 	}
-	
+
 	public ArrayList<String> parseFile(File f) {
 		ArrayList<String> array = new ArrayList<>();
 		try {
@@ -89,7 +73,7 @@ public class FileController {
 		}
 		return array;
 	}
-	
+
 	public File createReportFile(File f) {
 		File report = new File(output.getAbsolutePath() + "/" + f.getName().replaceFirst("[.][^.]+$", "") + ".done.dat");
 		if (report.exists()) {

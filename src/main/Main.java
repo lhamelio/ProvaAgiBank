@@ -24,8 +24,8 @@ public class Main {
 		
 		try {
             WatchService watcher = FileSystems.getDefault().newWatchService();
-            Path logDir = Paths.get(System.getenv("HOMEPATH") + "/data/in");
-            logDir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
+            Path path = Paths.get(System.getenv("HOMEPATH") + "/data/in");
+            path.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
             while (true) {
             	System.out.println("Monitorando por adicoes na pasta...");
                 WatchKey key = watcher.take();
