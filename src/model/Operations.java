@@ -1,8 +1,13 @@
 package model;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.Item;
 
 import sun.misc.Queue;
 
@@ -39,8 +44,25 @@ public class Operations {
 		System.out.println("Pronto!");
 	}
 
-	public void generateReport(ArrayList<Vendedor> arrayVendedor, ArrayList<Cliente> arrayCliente, ArrayList<Venda> arrayVenda) {
-
+	public void generateReport(File f, ArrayList<Vendedor> arrayVendedor, ArrayList<Cliente> arrayCliente, ArrayList<Venda> arrayVenda) {
+		try (PrintWriter out = new PrintWriter(new FileWriter(f))){
+			out.println("Quantidade de vendedores: " + arrayVendedor.size());
+			out.println("Quantidade de clientes: " + arrayCliente.size());
+			String idMaiorVenda = null;
+			double maiorVenda = 0;
+			for (Venda venda:arrayVenda) {
+				List<Item> itens = venda.getItem();
+				for (Item item:itens) {
+					if (item.getTotalSale() > maiorVenda) {
+						maiorVenda = item.getTotalSale();
+						idMaiorVenda = venda.getId();
+					}
+				}
+			}
+			out.println("ID da maior venda: " + idMaiorVenda);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Queue<String> parseData(String string) {

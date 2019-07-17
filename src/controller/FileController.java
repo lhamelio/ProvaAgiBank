@@ -73,22 +73,23 @@ public class FileController {
 		}
 		return listOfFiles;
 	}
-	public ArrayList<String> parseFile(ArrayList<File> listOfFiles, File f) {
+	
+	public ArrayList<String> parseFile(File f) {
 		ArrayList<String> array = new ArrayList<>();
-		for (File file:listOfFiles) {
-			try {
-				BufferedReader bf = new BufferedReader(new FileReader(file));
-				String linha;
-				while ((linha = bf.readLine()) != null) { //enquanto o arquivo nao terminar
-					array.add(linha); //adicionar ela ao array list
-				}
-				bf.close();
-			} catch (IOException e) {
-				System.out.println("Nao pude ler do arquivo.");
+		try {
+			BufferedReader bf = new BufferedReader(new FileReader(f));
+			String linha;
+			while ((linha = bf.readLine()) != null) { //enquanto o arquivo nao terminar
+				array.add(linha); //adicionar ela ao array list
 			}
+			bf.close();
+		} catch (IOException e) {
+			System.out.println("Nao pude ler do arquivo.");
+			e.printStackTrace();
 		}
 		return array;
 	}
+	
 	public File createReportFile(File f) {
 		File report = new File(output.getAbsolutePath() + "/" + f.getName().replaceFirst("[.][^.]+$", "") + ".done.dat");
 		if (report.exists()) {
@@ -101,8 +102,5 @@ public class FileController {
 			e.printStackTrace();
 		}
 		return report;
-	}
-	public void generateReport(File f) {
-		
 	}
 }

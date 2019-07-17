@@ -5,7 +5,6 @@ public class Item {
 	private String itemid;
 	private int quantity;
 	private double price;
-	private Venda venda;
 	
 	public Item() {
 		
@@ -21,7 +20,6 @@ public class Item {
 		this.itemid = itemid;
 		this.quantity = quantity;
 		this.price = price;
-		this.venda = venda;
 	}
 	public Item(String itemid, double price) {
 		super();
@@ -50,11 +48,8 @@ public class Item {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public Venda getVenda() {
-		return venda;
-	}
-	public void setVenda(Venda venda) {
-		this.venda = venda;
+	public double getTotalSale() {
+		return price * quantity;
 	}
 	
 	
