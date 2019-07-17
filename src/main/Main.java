@@ -21,7 +21,22 @@ public class Main {
 		Operations op = new Operations();
 		fC.checkDirectories();
 		run(fC, op);
-		
+		DirectoryWatcher(fC, op);
+	}
+	
+	private static void run(FileController fC, Operations op) {
+		ArrayList<File> listOfFiles = fC.openFiles();
+		for (int i = 0; i < listOfFiles.size(); i++) {
+			ArrayList<String> fileData = fC.parseFile(listOfFiles.get(i));
+			ArrayList<Vendedor> arrayVendedor = new ArrayList<>();
+			ArrayList<Cliente> arrayCliente = new ArrayList<>();
+			ArrayList<Venda> arrayVenda = new ArrayList<>();
+			op.createDataFromFile(fileData, arrayVendedor, arrayCliente, arrayVenda);
+			File report = fC.createReportFile(listOfFiles.get(i));
+			op.generateReport(report, arrayVendedor, arrayCliente, arrayVenda);
+		}
+	}
+	private static void DirectoryWatcher(FileController fC, Operations op) {
 		try {
             WatchService watcher = FileSystems.getDefault().newWatchService();
             Path path = Paths.get(System.getenv("HOMEPATH") + "/data/in");
@@ -41,19 +56,6 @@ public class Main {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-	}
-	
-	public static void run(FileController fC, Operations op) {
-		ArrayList<File> listOfFiles = fC.openFiles();
-		for (int i = 0; i < listOfFiles.size(); i++) {
-			ArrayList<String> fileData = fC.parseFile(listOfFiles.get(i));
-			ArrayList<Vendedor> arrayVendedor = new ArrayList<>();
-			ArrayList<Cliente> arrayCliente = new ArrayList<>();
-			ArrayList<Venda> arrayVenda = new ArrayList<>();
-			op.createDataFromFile(fileData, arrayVendedor, arrayCliente, arrayVenda);
-			File report = fC.createReportFile(listOfFiles.get(i));
-			op.generateReport(report, arrayVendedor, arrayCliente, arrayVenda);
-		}
 	}
 
 }
